@@ -1,0 +1,8 @@
+{
+    "background_color": "white",
+    "description": "Memorable quotes from ZSA teachers.",
+    "display": "fullscreen",
+    "name": "ZSA Quotes",
+    "short_name": "ZSA Quotes",
+    "start_url": "/index.html"
+}
