@@ -3,3 +3,13 @@
     font-size: 10vmin;
     max-height: 60vh;
 }
+
+.container > .row:nth-child(2) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container > .row:nth-child(2) > .button {
+    margin: auto 2%;
+}
