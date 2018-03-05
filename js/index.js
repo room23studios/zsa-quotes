@@ -10,7 +10,31 @@ function fetchQuote(id) {
     if (id !== undefined) {
         return fetch(`${hostname}/api/quote/${id}`)
             .then(response => response.json())
-            .then(json => json.quote)
+            .then(json => json)
+    }
+}
+
+function nextQuote() {
+    if (id !== undefined) {
+        return fetch(`${hostname}/api/quote/${id}/next`)
+            .then(response => response.json())
+            .then(json => {
+                console.log(json);
+                id = json.quote.id;
+                return json.quote;
+            });
+    }
+}
+
+function prevQuote() {
+    if (id !== undefined) {
+        return fetch(`${hostname}/api/quote/${id}/prev`)
+            .then(response => response.json())
+            .then(json => {
+                console.log(json.quote);
+                id = json.quote.id;
+                return json.quote;
+            });
     }
 }
 
@@ -25,13 +49,11 @@ function fetchRandomQuote() {
 
 document.querySelector('.random').addEventListener('click', () => updateQuote(fetchRandomQuote()));
 document.querySelector('.prev').addEventListener('click', () => {
-    id -= 1;
-    updateQuote(fetchQuote(id));
+    updateQuote(prevQuote(id));
     console.log(id);
 });
 document.querySelector('.next').addEventListener('click', () => {
-    id += 1;
-    updateQuote(fetchQuote(id));
+    updateQuote(nextQuote(id));
     console.log(id);
 });
 
