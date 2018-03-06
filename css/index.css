@@ -1,7 +1,6 @@
 .quote {
     text-align: center;
     font-size: 10vmin;
-    max-height: 60vh;
 }
 
 .container > .row:nth-child(2) {
