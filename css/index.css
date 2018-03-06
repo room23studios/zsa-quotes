@@ -1,17 +1,25 @@
-.quote {
+.quote-quote {
     text-align: center;
     font-size: 10vmin;
     margin-top: 40px;
-    min-height: 70vh;
 }
 
-.container > .row:nth-child(2) {
+.quote {
+    min-height: 70vh;
+    font-size: 4vmin;
+}
+
+.quote-details {
+    text-align: center;
+}
+
+.buttons {
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-.container > .row:nth-child(2) > .button {
+.buttons > .button {
     margin: auto 2%;
 }
 

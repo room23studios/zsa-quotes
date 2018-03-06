@@ -2,8 +2,11 @@ const hostname = 'https://alo-quotes.tk';
 let id;
 
 function updateQuote(quote) {
-    const quoteEl = document.querySelector('.quote');
-    quote.then(quote => quoteEl.innerHTML = quote.quote);
+    quote.then(quote => {
+        document.querySelector('.quote-quote').innerHTML = quote.quote;
+        document.getElementById('annotation').innerHTML = quote.annotation ? quote.annotation : '&nbsp;';
+        document.getElementById('date').innerHTML = quote.date ? quote.date : '&nbsp;';
+    });
 }
 
 function fetchQuote(id) {
