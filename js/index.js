@@ -57,6 +57,41 @@ document.querySelector('.next').addEventListener('click', () => {
     console.log(id);
 });
 
+document.getElementById('quote-textbox').addEventListener('input', (e) => {
+    console.log(e.target);
+    if (e.target.value != '') {
+        document.querySelector('input[type=submit]').className = 'button-primary';
+    } else {
+        document.querySelector('input[type=submit]').className = '';
+    }
+});
+
+document.getElementById('submit-form').addEventListener('submit', (e) => {
+    let quote = document.getElementById('quote-textbox').value;
+    let annotation = document.getElementById('annotation').value;
+    let date = document.getElementById('date').value;
+
+    e.preventDefault();
+
+    let data = new FormData();
+
+    fetch(`${hostname}/api/submit`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+
+        body: JSON.stringify({ quote, annotation, date })
+    })
+        .then(response => response.json())
+        .then(json => {
+            if (json.status === 'success') {
+                console.log('Quote submitted successfully!');
+                console.log(json);
+            }
+        })
+})
+
 updateQuote(fetchRandomQuote());
 
 window.id = id;

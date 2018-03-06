@@ -13,3 +13,19 @@
 .container > .row:nth-child(2) > .button {
     margin: auto 2%;
 }
+
+.container > form {
+    margin-top: 40px;
+}
+
+.container > form input {
+    width: 100%;
+}
+
+form input#date {
+    box-sizing: border-box;
+    height: 38px;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    padding: 6px 10px;
+}
