@@ -1,4 +1,4 @@
-const hostname = 'https://alo-quotes.tk';
+let hostname = 'https://alo-quotes.tk';
 let id;
 
 function updateQuote(quote) {
@@ -96,5 +96,3 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
 })
 
 updateQuote(fetchRandomQuote());
-
-window.id = id;
