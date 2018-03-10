@@ -5,16 +5,14 @@ let next;
 
 function checkPrevNext() {
     if (next != null) {
-        document.querySelector('.next').style.visibility = "visible" ;
-    }
-    else {
-        document.querySelector('.next').style.visibility = "hidden" ;
+        document.querySelector('.next').style.visibility = "visible";
+    } else {
+        document.querySelector('.next').style.visibility = "hidden";
     }
     if (prev != null) {
-        document.querySelector('.prev').style.visibility = "visible" ;
-    }
-    else {
-        document.querySelector('.prev').style.visibility = "hidden" ;
+        document.querySelector('.prev').style.visibility = "visible";
+    } else {
+        document.querySelector('.prev').style.visibility = "hidden";
     }
 }
 
@@ -29,11 +27,13 @@ function updateQuote(quote) {
 function fetchQuote(id) {
     if (id !== undefined) {
         return fetch(`${hostname}/api/quotes/${id}`, {
-            headers: new Headers({
-                'Accept': 'application/json'
+                headers: new Headers({
+                    'Accept': 'application/json'
+                })
             })
-        })
-            .then(response => {return response.json()})
+            .then(response => {
+                return response.json()
+            })
             .then(json => {
                 id = json.quote.id;
                 next = json.next;
@@ -47,11 +47,13 @@ function fetchQuote(id) {
 
 function fetchRandomQuote() {
     return fetch(`${hostname}/api/random`, {
-        headers: new Headers({
-            'Accept': 'application/json'
+            headers: new Headers({
+                'Accept': 'application/json'
+            })
         })
-    })
-        .then(response =>  {return response.json()})
+        .then(response => {
+            return response.json()
+        })
         .then(json => {
             id = json.quote.id;
             next = json.next;
@@ -86,22 +88,26 @@ document.getElementById('quote-textbox').addEventListener('input', (e) => {
 
 document.getElementById('submit-form').addEventListener('submit', (e) => {
     let text = document.getElementById('quote-textbox').value;
-    let annotation = document.getElementById('annotation').value;
-    let date = document.getElementById('date').value;
+    let annotation = document.getElementById('annotation-form').value;
+    let date = document.getElementById('date-form').value;
 
     e.preventDefault();
 
     let data = new FormData();
 
     fetch(`${hostname}/api/submit/`, {
-        method: 'POST',
-        headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json'
-        },
-    
-        body: JSON.stringify({ text, annotation, date })
-    })
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            },
+
+            body: JSON.stringify({
+                text,
+                annotation,
+                date
+            })
+        })
         .then(response => response.json())
         .then(json => {
             if (json.status === 'success') {
