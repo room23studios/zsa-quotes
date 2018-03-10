@@ -1,5 +1,22 @@
 let hostname = 'https://alo-quotes.tk';
 let id;
+let prev;
+let next;
+
+function checkPrevNext() {
+    if (next != null) {
+        document.querySelector('.next').style.visibility = "visible" ;
+    }
+    else {
+        document.querySelector('.next').style.visibility = "hidden" ;
+    }
+    if (prev != null) {
+        document.querySelector('.prev').style.visibility = "visible" ;
+    }
+    else {
+        document.querySelector('.prev').style.visibility = "hidden" ;
+    }
+}
 
 function updateQuote(quote) {
     quote.then(quote => {
@@ -16,34 +33,17 @@ function fetchQuote(id) {
                 'Accept': 'application/json'
             })
         })
-            .then(response => response.json())
-            .then(json => json)
-    }
-}
-
-function nextQuote() {
-    if (id !== undefined) {
-        return fetch(`${hostname}/api/quote/${id}/next`)
-            .then(response => response.json())
+            .then(response => {return response.json()})
             .then(json => {
-                console.log(json);
                 id = json.quote.id;
+                next = json.next;
+                prev = json.prev;
+                checkPrevNext()
                 return json.quote;
             });
     }
 }
 
-function prevQuote() {
-    if (id !== undefined) {
-        return fetch(`${hostname}/api/quote/${id}/prev`)
-            .then(response => response.json())
-            .then(json => {
-                console.log(json.quote);
-                id = json.quote.id;
-                return json.quote;
-            });
-    }
-}
 
 function fetchRandomQuote() {
     return fetch(`${hostname}/api/random`, {
@@ -51,21 +51,28 @@ function fetchRandomQuote() {
             'Accept': 'application/json'
         })
     })
-        .then(response => response.json())
+        .then(response =>  {return response.json()})
         .then(json => {
             id = json.quote.id;
+            next = json.next;
+            prev = json.prev;
+            checkPrevNext()
             return json.quote;
         });
 }
 
 document.querySelector('.random').addEventListener('click', () => updateQuote(fetchRandomQuote()));
 document.querySelector('.prev').addEventListener('click', () => {
-    updateQuote(prevQuote(id));
-    console.log(id);
+    if (prev != null) {
+        updateQuote(fetchQuote(prev));
+        console.log(id);
+    }
 });
 document.querySelector('.next').addEventListener('click', () => {
-    updateQuote(nextQuote(id));
-    console.log(id);
+    if (next != null) {
+        updateQuote(fetchQuote(next));
+        console.log(id);
+    }
 });
 
 document.getElementById('quote-textbox').addEventListener('input', (e) => {
@@ -78,7 +85,7 @@ document.getElementById('quote-textbox').addEventListener('input', (e) => {
 });
 
 document.getElementById('submit-form').addEventListener('submit', (e) => {
-    let quote = document.getElementById('quote-textbox').value;
+    let text = document.getElementById('quote-textbox').value;
     let annotation = document.getElementById('annotation').value;
     let date = document.getElementById('date').value;
 
@@ -86,14 +93,14 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
 
     let data = new FormData();
 
-    fetch(`${hostname}/api/submit`, {
+    fetch(`${hostname}/api/submit/`, {
         method: 'POST',
         headers: {
             'Content-type': 'application/json',
             'Accept': 'application/json'
         },
-
-        body: JSON.stringify({ quote, annotation, date })
+    
+        body: JSON.stringify({ text, annotation, date })
     })
         .then(response => response.json())
         .then(json => {
