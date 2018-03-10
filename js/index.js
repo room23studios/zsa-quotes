@@ -3,7 +3,7 @@ let id;
 
 function updateQuote(quote) {
     quote.then(quote => {
-        document.querySelector('.quote-quote').innerHTML = quote.quote;
+        document.querySelector('.quote-quote').innerHTML = quote.text;
         document.getElementById('annotation').innerHTML = quote.annotation ? quote.annotation : '&nbsp;';
         document.getElementById('date').innerHTML = quote.date ? quote.date : '&nbsp;';
     });
@@ -11,7 +11,11 @@ function updateQuote(quote) {
 
 function fetchQuote(id) {
     if (id !== undefined) {
-        return fetch(`${hostname}/api/quote/${id}`)
+        return fetch(`${hostname}/api/quotes/${id}`, {
+            headers: new Headers({
+                'Accept': 'application/json'
+            })
+        })
             .then(response => response.json())
             .then(json => json)
     }
@@ -42,7 +46,11 @@ function prevQuote() {
 }
 
 function fetchRandomQuote() {
-    return fetch(`${hostname}/api/random`)
+    return fetch(`${hostname}/api/random`, {
+        headers: new Headers({
+            'Accept': 'application/json'
+        })
+    })
         .then(response => response.json())
         .then(json => {
             id = json.quote.id;
@@ -81,7 +89,8 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
     fetch(`${hostname}/api/submit`, {
         method: 'POST',
         headers: {
-            'Content-type': 'application/json'
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
         },
 
         body: JSON.stringify({ quote, annotation, date })
