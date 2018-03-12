@@ -27,10 +27,10 @@ function updateQuote(quote) {
 function fetchQuote(id) {
     if (id !== undefined) {
         return fetch(`${hostname}/api/quotes/${id}`, {
-                headers: new Headers({
-                    'Accept': 'application/json'
-                })
+            headers: new Headers({
+                'Accept': 'application/json'
             })
+        })
             .then(response => {
                 return response.json()
             })
@@ -47,10 +47,10 @@ function fetchQuote(id) {
 
 function fetchRandomQuote() {
     return fetch(`${hostname}/api/random`, {
-            headers: new Headers({
-                'Accept': 'application/json'
-            })
+        headers: new Headers({
+            'Accept': 'application/json'
         })
+    })
         .then(response => {
             return response.json()
         })
@@ -93,21 +93,26 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
 
     e.preventDefault();
 
-    let data = new FormData();
+    body = {
+        text
+    };
+
+    if (annotation !== '') {
+        body.annotation = annotation;
+    }
+    if (date !== '') {
+        body.date = date;
+    }
 
     fetch(`${hostname}/api/submit/`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json'
-            },
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
+        },
 
-            body: JSON.stringify({
-                text,
-                annotation,
-                date
-            })
-        })
+        body: JSON.stringify(body)
+    })
         .then(response => response.json())
         .then(json => {
             if (json.status === 'success') {
