@@ -38,3 +38,19 @@ input[type=date] {
     border-radius: 4px;
     padding: 6px 10px;
 }
+
+.alert {
+    text-align: center;
+    margin-top: 40px;
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid #222;
+}
+
+.success {
+    border: 1px solid green;
+}
+
+.error {
+    border: 1px solid red;
+}

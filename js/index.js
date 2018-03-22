@@ -1,4 +1,4 @@
-let hostname = 'https://alo-quotes.tk';
+let hostname = window.location.hostname.includes('localhost') ? 'http://localhost:8000' : 'https://alo-quotes.tk';
 let id;
 let prev;
 let next;
@@ -78,7 +78,6 @@ document.querySelector('.next').addEventListener('click', () => {
 });
 
 document.getElementById('quote-textbox').addEventListener('input', (e) => {
-    console.log(e.target);
     if (e.target.value != '') {
         document.querySelector('input[type=submit]').className = 'button-primary';
     } else {
@@ -115,11 +114,26 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
     })
         .then(response => response.json())
         .then(json => {
+            let text, className;
             if (json.status === 'success') {
-                console.log('Quote submitted successfully!');
-                console.log(json);
+                text = 'Quote submitted successfully!';
+                className = 'alert success';
+            } else {
+                text = 'Oh no! Something bad happened and quote cannot be submitted!';
+                let messages = json.messages.text.map(sentence => sentence.charAt(0).toUpperCase() + sentence.slice(1)).join('<br>');
+                text += '<br>' + messages;
+                className = 'alert error';
             }
+            let elem = document.createElement('div');
+            elem.className = className;
+            elem.innerHTML = text;
+
+            let form = document.getElementById('submit-form');
+            let container = document.querySelector('.container');
+            container.insertBefore(elem, form);
+            setTimeout(() => elem.remove(), 2000);
         })
+        .catch(stuff => console.log(stuff));
 })
 
 updateQuote(fetchRandomQuote());
