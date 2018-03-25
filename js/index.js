@@ -74,13 +74,11 @@ document.querySelector('.random').addEventListener('click', () => updateQuote(fe
 document.querySelector('.prev').addEventListener('click', () => {
     if (prev != null) {
         updateQuote(fetchQuote(prev));
-        console.log(id);
     }
 });
 document.querySelector('.next').addEventListener('click', () => {
     if (next != null) {
         updateQuote(fetchQuote(next));
-        console.log(id);
     }
 });
 
