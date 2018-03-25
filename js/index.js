@@ -20,7 +20,7 @@ function checkPrevNext() {
 
 function updateQuote(quote) {
     quote.then(quote => {
-        document.querySelector('.quote-quote').innerHTML = quote.text;
+        document.querySelector('.quote-quote').innerHTML = quote.text.replace(/\n/g, '<br>');
         document.getElementById('annotation').innerHTML = quote.annotation ? quote.annotation : '&nbsp;';
         if (quote.date) {
             let date = new Date(quote.date);
