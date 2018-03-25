@@ -72,6 +72,10 @@ function fetchRandomQuote() {
         });
 }
 
+function validateForm(quote) {
+    return quote.trim().length !== 0;
+}
+
 document.querySelector('.random').addEventListener('click', () => updateQuote(fetchRandomQuote()));
 document.querySelector('.prev').addEventListener('click', () => {
     if (prev != null) {
@@ -85,7 +89,7 @@ document.querySelector('.next').addEventListener('click', () => {
 });
 
 document.getElementById('quote-textbox').addEventListener('input', (e) => {
-    if (e.target.value != '') {
+    if (validateForm(e.target.value)) {
         document.querySelector('input[type=submit]').className = 'button-primary';
     } else {
         document.querySelector('input[type=submit]').className = '';
@@ -93,11 +97,16 @@ document.getElementById('quote-textbox').addEventListener('input', (e) => {
 });
 
 document.getElementById('submit-form').addEventListener('submit', (e) => {
-    let text = document.getElementById('quote-textbox').value;
-    let annotation = document.getElementById('annotation-form').value;
+    e.preventDefault();
+
+    let text = document.getElementById('quote-textbox').value.trim();
+    let annotation = document.getElementById('annotation-form').value.trim();
     let date = document.getElementById('date-form').value;
 
-    e.preventDefault();
+    if (!validateForm(text)) {
+        return;
+    }
+
 
     body = {
         text
