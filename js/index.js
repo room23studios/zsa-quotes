@@ -99,24 +99,24 @@ document.getElementById('quote-textbox').addEventListener('input', (e) => {
 document.getElementById('submit-form').addEventListener('submit', (e) => {
     e.preventDefault();
 
-    let text = document.getElementById('quote-textbox').value.trim();
-    let annotation = document.getElementById('annotation-form').value.trim();
-    let date = document.getElementById('date-form').value;
+    let text = document.getElementById('quote-textbox');
+    let annotation = document.getElementById('annotation-form');
+    let date = document.getElementById('date-form');
 
-    if (!validateForm(text)) {
+    if (!validateForm(text.value)) {
         return;
     }
 
 
     body = {
-        text
+        text: text.value.trim()
     };
 
     if (annotation !== '') {
-        body.annotation = annotation;
+        body.annotation = annotation.value.trim();
     }
     if (date !== '') {
-        body.date = date;
+        body.date = date.value;
     }
 
     fetch(`${hostname}/api/submit/`, {
@@ -148,8 +148,12 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
             let container = document.querySelector('.container');
             container.insertBefore(elem, form);
             setTimeout(() => elem.remove(), 2000);
+
+            text.value = '';
+            annotation.value = '';
         })
         .catch(stuff => console.log(stuff));
+
 })
 
 updateQuote(fetchRandomQuote());
