@@ -3,6 +3,8 @@ let id;
 let prev;
 let next;
 
+document.getElementById('date-form').valueAsDate = new Date();
+
 function checkPrevNext() {
     if (next != null) {
         document.querySelector('.next').style.visibility = "visible";
