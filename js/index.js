@@ -20,7 +20,14 @@ function updateQuote(quote) {
     quote.then(quote => {
         document.querySelector('.quote-quote').innerHTML = quote.text;
         document.getElementById('annotation').innerHTML = quote.annotation ? quote.annotation : '&nbsp;';
-        document.getElementById('date').innerHTML = quote.date ? quote.date : '&nbsp;';
+        if (quote.date) {
+            let date = new Date(quote.date);
+            document.getElementById('date').innerHTML = date.toLocaleDateString('pl-PL', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            });
+        } else {
+            document.getElementById('date').innerHTML = '&nbsp;';
+        }
     });
 }
 
