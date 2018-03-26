@@ -154,6 +154,18 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
         })
         .catch(stuff => console.log(stuff));
 
-})
+});
+
+document.addEventListener('keypress', (e) => {
+    if (e.key === 'ArrowLeft') {
+        if (prev != null) {
+            updateQuote(fetchQuote(prev));
+        }
+    } else if (e.key === 'ArrowRight') {
+        if (next != null) {
+            updateQuote(fetchQuote(next));
+        }
+    }
+});
 
 updateQuote(fetchRandomQuote());
