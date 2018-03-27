@@ -156,7 +156,7 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
 
 });
 
-document.addEventListener('keypress', (e) => {
+document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') {
         if (prev != null) {
             updateQuote(fetchQuote(prev));
