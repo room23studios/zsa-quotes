@@ -135,9 +135,12 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
                 text = 'Quote submitted successfully!';
                 className = 'alert success';
             } else {
-                text = 'Oh no! Something bad happened and quote cannot be submitted!';
-                let messages = json.messages.text.map(sentence => sentence.charAt(0).toUpperCase() + sentence.slice(1)).join('<br>');
-                text += '<br>' + messages;
+                text = 'Oh no! Something bad happened and quote cannot be submitted!<br>';
+                let messages = '';
+                for(key in json.messages) {
+                    messages += json.messages[key].map(sentence => sentence.charAt(0).toUpperCase() + sentence.slice(1)).join('<br>');
+                }
+                text += messages;
                 className = 'alert error';
             }
             let elem = document.createElement('div');
