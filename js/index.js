@@ -112,10 +112,10 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
         text: text.value.trim()
     };
 
-    if (annotation !== '') {
+    if (annotation.value !== '') {
         body.annotation = annotation.value.trim();
     }
-    if (date !== '') {
+    if (date.value !== '') {
         body.date = date.value;
     }
 
