@@ -1,6 +1,17 @@
+@media (max-width: 1366px) {
+    .quote-quote {
+        font-size: 10vmin;
+    }
+}
+
+@media (min-width: 1367px) {
+    .quote-quote {
+        font-size: 8vmin;
+    }
+}
+
 .quote-quote {
     text-align: center;
-    font-size: 10vmin;
     margin-top: 40px;
 }
 
