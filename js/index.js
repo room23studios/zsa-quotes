@@ -1,4 +1,6 @@
 let hostname = window.location.hostname.includes('localhost') ? 'http://localhost:8000' : 'https://alo-quotes.tk';
+let params = new URLSearchParams(document.location.search.substr(1));
+
 let id;
 let prev;
 let next;
@@ -18,19 +20,21 @@ function checkPrevNext() {
     }
 }
 
+function updateQuotePromise(quote) {
+    quote.then(quote => updateQuote(quote));
+}
+
 function updateQuote(quote) {
-    quote.then(quote => {
-        document.querySelector('.quote-quote').innerHTML = quote.text.replace(/\n/g, '<br>');
-        document.getElementById('annotation').innerHTML = quote.annotation ? quote.annotation : '&nbsp;';
-        if (quote.date) {
-            let date = new Date(quote.date);
-            document.getElementById('date').innerHTML = date.toLocaleDateString('pl-PL', {
-                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-            });
-        } else {
-            document.getElementById('date').innerHTML = '&nbsp;';
-        }
-    });
+    document.querySelector('.quote-quote').innerHTML = quote.text.replace(/\n/g, '<br>');
+    document.getElementById('annotation').innerHTML = quote.annotation ? quote.annotation : '&nbsp;';
+    if (quote.date) {
+        let date = new Date(quote.date);
+        document.getElementById('date').innerHTML = date.toLocaleDateString('pl-PL', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+    } else {
+        document.getElementById('date').innerHTML = '&nbsp;';
+    }
 }
 
 function fetchQuote(id) {
@@ -48,8 +52,12 @@ function fetchQuote(id) {
                 next = json.next;
                 prev = json.prev;
                 checkPrevNext()
+                
+                history.replaceState(json.quote, '', `?id=${json.quote.id}`);
+                
                 return json.quote;
             });
+
     }
 }
 
@@ -60,31 +68,32 @@ function fetchRandomQuote() {
             'Accept': 'application/json'
         })
     })
-        .then(response => {
-            return response.json()
-        })
-        .then(json => {
-            id = json.quote.id;
-            next = json.next;
-            prev = json.prev;
-            checkPrevNext()
-            return json.quote;
-        });
+    .then(response => response.json())
+    .then(json => {
+        id = json.quote.id;
+        next = json.next;
+        prev = json.prev;
+        checkPrevNext()
+
+        history.pushState(json.quote, '', `?id=${json.quote.id}`);
+        
+        return json.quote;
+    });
 }
 
 function validateForm(quote) {
     return quote.trim().length !== 0;
 }
 
-document.querySelector('.random').addEventListener('click', () => updateQuote(fetchRandomQuote()));
+document.querySelector('.random').addEventListener('click', () => updateQuotePromise(fetchRandomQuote()));
 document.querySelector('.prev').addEventListener('click', () => {
     if (prev != null) {
-        updateQuote(fetchQuote(prev));
+        updateQuotePromise(fetchQuote(prev));
     }
 });
 document.querySelector('.next').addEventListener('click', () => {
     if (next != null) {
-        updateQuote(fetchQuote(next));
+        updateQuotePromise(fetchQuote(next));
     }
 });
 
@@ -162,13 +171,23 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
 document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') {
         if (prev != null) {
-            updateQuote(fetchQuote(prev));
+            updateQuotePromise(fetchQuote(prev));
         }
     } else if (e.key === 'ArrowRight') {
         if (next != null) {
-            updateQuote(fetchQuote(next));
+            updateQuotePromise(fetchQuote(next));
         }
     }
 });
 
-updateQuote(fetchRandomQuote());
+window.onpopstate = (e) => {
+    updateQuote(e.state);
+}
+
+if (params.has('id')) {
+    let id = parseInt(params.get('id'));
+    updateQuotePromise(fetchQuote(id));
+}
+else {
+    updateQuotePromise(fetchRandomQuote());
+}
