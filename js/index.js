@@ -1,3 +1,5 @@
+console.log('Hello there!');
+
 let hostname = window.location.hostname.includes('localhost') ? 'http://localhost:8000' : 'https://alo-quotes.tk';
 let params = new URLSearchParams(document.location.search.substr(1));
 
