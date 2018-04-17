@@ -4,7 +4,7 @@
   "display": "fullscreen",
   "name": "ZSA Quotes",
   "short_name": "ZSA Quotes",
-  "start_url": "/index.html",
+  "start_url": "/zsa-quotes/index.html",
   "icons": [
     {
       "src": "images/icon.png",
