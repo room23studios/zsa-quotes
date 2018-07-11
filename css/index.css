@@ -1,23 +1,38 @@
-@media (max-width: 1366px) {
-    .quote-quote {
-        font-size: 10vmin;
+@media screen and (orientation: landscape) {
+    .quote-text {
+        font-size: 4vw;
+    }
+
+    .quote-text-long {
+        font-size: 3vw;
+    }
+
+    .quote-details {
+        font-size: 2vw;
     }
 }
 
-@media (min-width: 1367px) {
-    .quote-quote {
-        font-size: 8vmin;
+@media screen and (orientation: portrait) {
+    .quote-text {
+        font-size: 8vw;
+    }
+
+    .quote-text-long {
+        font-size: 6vw;
+    }
+
+    .quote-details {
+        font-size: 4vw;
     }
 }
 
-.quote-quote {
+.quote-text {
     text-align: center;
     margin-top: 40px;
 }
 
 .quote {
     min-height: 70vh;
-    font-size: 4vmin;
 }
 
 .quote-details {

@@ -1,6 +1,6 @@
 console.log('Hello there!');
 
-let hostname = window.location.hostname.includes('localhost') ? 'http://localhost:8000' : 'https://alo-quotes.tk';
+let hostname = 'https://alo-quotes.tk';
 let params = new URLSearchParams(document.location.search.substr(1));
 
 let id;
@@ -27,7 +27,15 @@ function updateQuotePromise(quote) {
 }
 
 function updateQuote(quote) {
-    document.querySelector('.quote-quote').innerHTML = quote.text.replace(/\n/g, '<br>');
+    let quoteTextElement = document.querySelector('.quote-text');
+
+    if(quote.text.length > 80) {
+        quoteTextElement.classList.add('quote-text-long');
+    } else {
+        quoteTextElement.className = 'quote-text';
+    }
+
+    quoteTextElement.innerHTML = quote.text.replace(/\n/g, '<br>');
     document.getElementById('annotation').innerHTML = quote.annotation ? quote.annotation : '&nbsp;';
     if (quote.date) {
         let date = new Date(quote.date);
