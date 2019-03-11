@@ -179,6 +179,11 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
 });
 
 document.addEventListener('keydown', (e) => {
+    let element = document.activeElement.nodeName.toLowerCase();
+    if (element === 'input' || element === 'textarea') {
+        return;
+    }
+
     if (e.key === 'ArrowLeft') {
         if (prev != null) {
             updateQuotePromise(fetchQuote(prev));
