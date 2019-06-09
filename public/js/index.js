@@ -11,14 +11,14 @@ document.getElementById('date-form').valueAsDate = new Date();
 
 function checkPrevNext() {
     if (next != null) {
-        document.querySelector('.next').style.visibility = "visible";
+        document.querySelector('.next').style.visibility = 'visible';
     } else {
-        document.querySelector('.next').style.visibility = "hidden";
+        document.querySelector('.next').style.visibility = 'hidden';
     }
     if (prev != null) {
-        document.querySelector('.prev').style.visibility = "visible";
+        document.querySelector('.prev').style.visibility = 'visible';
     } else {
-        document.querySelector('.prev').style.visibility = "hidden";
+        document.querySelector('.prev').style.visibility = 'hidden';
     }
 }
 
@@ -55,13 +55,13 @@ function fetchQuote(id) {
             })
         })
             .then(response => {
-                return response.json()
+                return response.json();
             })
             .then(json => {
                 id = json.quote.id;
                 next = json.next;
                 prev = json.prev;
-                checkPrevNext()
+                checkPrevNext();
                 
                 history.replaceState(json.quote, '', `?id=${json.quote.id}`);
                 
@@ -78,17 +78,17 @@ function fetchRandomQuote() {
             'Accept': 'application/json'
         })
     })
-    .then(response => response.json())
-    .then(json => {
-        id = json.quote.id;
-        next = json.next;
-        prev = json.prev;
-        checkPrevNext()
+        .then(response => response.json())
+        .then(json => {
+            id = json.quote.id;
+            next = json.next;
+            prev = json.prev;
+            checkPrevNext();
 
-        history.pushState(json.quote, '', `?id=${json.quote.id}`);
+            history.pushState(json.quote, '', `?id=${json.quote.id}`);
         
-        return json.quote;
-    });
+            return json.quote;
+        });
 }
 
 function validateForm(quote) {
@@ -127,7 +127,7 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
     }
 
 
-    body = {
+    let body = {
         text: text.value.trim()
     };
 
@@ -156,7 +156,7 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
             } else {
                 text = 'Oh no! Something bad happened and quote cannot be submitted!<br>';
                 let messages = '';
-                for(key in json.messages) {
+                for(let key in json.messages) {
                     messages += json.messages[key].map(sentence => sentence.charAt(0).toUpperCase() + sentence.slice(1)).join('<br>');
                 }
                 text += messages;
@@ -197,7 +197,7 @@ document.addEventListener('keydown', (e) => {
 
 window.onpopstate = (e) => {
     updateQuote(e.state);
-}
+};
 
 if (params.has('id')) {
     let id = parseInt(params.get('id'));
