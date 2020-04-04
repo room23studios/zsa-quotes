@@ -1,6 +1,6 @@
 console.log('Hello there!');
 
-let hostname = 'https://alo-quotes.tk';
+let hostname = 'http://127.0.0.1:8000';
 let params = new URLSearchParams(document.location.search.substr(1));
 
 let id;
@@ -29,7 +29,7 @@ function updateQuotePromise(quote) {
 function updateQuote(quote) {
     let quoteTextElement = document.querySelector('.quote-text');
 
-    if(quote.text.length > 80) {
+    if (quote.text.length > 80) {
         quoteTextElement.classList.add('quote-text-long');
     } else {
         quoteTextElement.className = 'quote-text';
@@ -62,9 +62,9 @@ function fetchQuote(id) {
                 next = json.next;
                 prev = json.prev;
                 checkPrevNext();
-                
+
                 history.replaceState(json.quote, '', `?id=${json.quote.id}`);
-                
+
                 return json.quote;
             });
 
@@ -86,7 +86,7 @@ function fetchRandomQuote() {
             checkPrevNext();
 
             history.pushState(json.quote, '', `?id=${json.quote.id}`);
-        
+
             return json.quote;
         });
 }
@@ -156,7 +156,7 @@ document.getElementById('submit-form').addEventListener('submit', (e) => {
             } else {
                 text = 'Oh no! Something bad happened and quote cannot be submitted!<br>';
                 let messages = '';
-                for(let key in json.messages) {
+                for (let key in json.messages) {
                     messages += json.messages[key].map(sentence => sentence.charAt(0).toUpperCase() + sentence.slice(1)).join('<br>');
                 }
                 text += messages;
